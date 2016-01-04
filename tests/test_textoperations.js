@@ -1,4 +1,7 @@
 test("TextOps - Text Cleanup", function() {
+    // FAIL this one to test travis-ci integration
+    deepEqual(textToValues("A").text, "B");
+
     deepEqual(textToValues("A").text, "A");
 
     deepEqual(textToValues("ä").text, "AE");
