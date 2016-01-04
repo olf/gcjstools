@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<title>GCJSTools Demo</title>
+<meta charset="utf-8">
+<style type="text/css" media="screen">
+body {font-family:sans-serif}
+</style>
+<script>
+
+function click_listener(event) {
+    document.getElementById('projektion_start').value = coords_dec_to_deg(event.latLng.lat(), event.latLng.lng());
+}
+
+function do_projection()
+{
+    var prj_start = coords_any_to_dec(document.getElementById('projektion_start').value);
+
+    if (!prj_start)
+    {
+        document.getElementById('ziel_gc').value = "Unknown format";
+        document.getElementById('target').style.display = 'inline';
+        return;
+    }
+
+    var ns = prj_start[0];
+    var ew = prj_start[1];
+
+    var distance = parseFloat(document.getElementById('distance').value,10);
+    var direction = parseFloat(document.getElementById('direction').value,10);
+
+    var prj_target = projection(ns, ew, direction, distance);
+    var target_text = coords_dec_to_deg(prj_target[0], prj_target[1]);
+
+    document.getElementById('ziel_gc').value = target_text;
+    document.getElementById('target').style.display = 'inline';
+
+    document.getElementById('ziel_gc').focus();
+    document.getElementById('ziel_gc').select();
+
+    prj_start  = groundspeak_round(prj_start);
+    prj_target = groundspeak_round(prj_target);
+
+    document.getElementById('source_deg').innerHTML = coords_dec_to_deg(prj_start[0], prj_start[1]);
+    document.getElementById('source_dec').innerHTML = prj_start[0] + "," + prj_start[1];
+    document.getElementById('target_deg').innerHTML = target_text;
+    document.getElementById('target_dec').innerHTML = prj_target[0] + "," + prj_target[1];
+
+    return(true);
+}
+
+function text_ops() {
+    var text = document.getElementById('tc_text').value;
+
+    if (text.length > 0) {
+        var result = textToValues(text);
+
+        document.getElementById('tc_cleantext').innerHTML = result.text;
+        document.getElementById('tc_values').innerHTML = result.values.reduce(function(p,v) {return p + (v > 0 ? " + " + v : '');});
+        document.getElementById('tc_sum').innerHTML = result.sum;
+        document.getElementById('tc_xsum').innerHTML = result.cross_sum;
+        document.getElementById('tc_itxsum').innerHTML = result.cross_sum_iterated;
+    } else {
+        document.getElementById('tc_cleantext').innerHTML = '';
+        document.getElementById('tc_values').innerHTML = '';
+        document.getElementById('tc_sum').innerHTML = '';
+        document.getElementById('tc_xsum').innerHTML = '';
+        document.getElementById('tc_itxsum').innerHTML = '';
+    }
+
+    return (true);
+}
+
+</script>
+<h2>Text Conversion</h2>
+
+<div>
+    <label>Text:</label>
+    <input type="text" style="width:600px" id="tc_text" value="" onKeyUp=" text_ops();">
+</div>
+
+<table>
+<tr>
+    <td>Used text:</td>
+    <td id="tc_cleantext"></td>
+</tr>
+<tr>
+    <td>Character values:</td>
+    <td id="tc_values"></td>
+</tr>
+<tr>
+    <td>Sum of values:</td>
+    <td id="tc_sum"></td>
+</tr>
+<tr>
+    <td>Cross sum of values:</td>
+    <td id="tc_xsum"></td>
+</tr>
+<tr>
+    <td>Iterated cross sum of values:</td>
+    <td id="tc_itxsum"></td>
+</tr>
+</table>
+
+<h2>Coordinate Conversion and Projection</h2>
+<form>
+    <table style="border:none">
+        <tr>
+            <td>Start:</td>
+            <td style="white-space:nowrap">
+                <input style="width:150px" type="text" id="projektion_start" maxlength="50" value="N53°04.552' E008°48.436'">
+            </td>
+        </tr>
+        <tr>
+            <td>Distance:</td>
+            <td><input style="width:40px" type="text" id="distance" maxlength="6" value="88.0"> meters</td>
+        </tr>
+        <tr style="vertical-align:middle">
+            <td>Direction:</td>
+            <td><input style="width:40px" type="text" id="direction" maxlength="6" value="120.5">&deg;</td>
+        </tr>
+        <tr style="text-align:left;vertical-align:middle">
+            <td></td>
+            <td><input type="button" value="Calculate" onclick="do_projection();"></td>
+        </tr>
+    </table>
+</form>
+<div id="target" style="display:none;">
+    Target: <input style="width:150px" type="text" id="ziel_gc" value="" onfocus="this.select()" onMouseUp="return false" >
+    <p><strong>Summary:</strong></p>
+    <table>
+        <tr><td>Start:</td><td id="source_deg"></td></tr>
+        <tr><td></td><td id="source_dec"></td></tr>
+        <tr><td colspan="2"></td></tr>
+        <tr><td>Target:</td><td id="target_deg"></td></tr>
+        <tr><td></td><td id="target_dec"></td></tr>
+    </table>
+
+</div>
+
+<script src="lib/coordinate_conversions.js"></script>
+<script src="lib/coordinate_projection.js"></script>
+<script src="lib/text_operations.js"></script>
+</html>
