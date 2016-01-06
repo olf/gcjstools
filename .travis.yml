@@ -4,6 +4,6 @@ node_js:
   - "5.3"
 
 before_script:
-  - npm install -g grunt-cli
+  - npm install -g gulp
 
-script: grunt test --verbose
+script: gulp test --verbose

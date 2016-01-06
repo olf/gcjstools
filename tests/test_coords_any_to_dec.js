@@ -1,7 +1,6 @@
 function test_coords_any_to_dec(input, expected) {
 	var coords = coords_any_to_dec(input);
-
-	var coords = groundspeak_round(coords);
+	coords = groundspeak_round(coords);
 
 	deepEqual(coords, expected, input + " = " + coords + " (tobe: " + expected + ")");
 }
