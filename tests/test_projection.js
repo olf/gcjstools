@@ -14,7 +14,7 @@ test("coord projection", function() {
 	test_deg_projection("N53°06.083' E008°49.362'", 372, 0, "N53°06.083' E008°49.362'");
 
 	// too low degrees
-	test_deg_projection("S53°06.083' E008°49.362'", -50, 0, "N53°06.083' E008°49.362'");
+	test_deg_projection("N53°06.083' E008°49.362'", -50, 0, "N53°06.083' E008°49.362'");
 	test_deg_projection("N53°06.083' E008°49.362'", -400, 0, "N53°06.083' E008°49.362'");
 
 	// Real tests
