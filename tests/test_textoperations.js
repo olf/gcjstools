@@ -93,3 +93,10 @@ test("TextOps - Iterated Cross Sums", function() {
 
     deepEqual(textToValues("ZZZZZZZ").cross_sum_iterated, 2);
 });
+
+test("TextOps - Values", function() {
+    deepEqual(textToValues("A").values, [1]);
+    deepEqual(textToValues("A A").values, [1,1]);
+    deepEqual(textToValues("Ä-A").values, [1,5,1]);
+    deepEqual(textToValues("ä+a").values, [1,5,1]);
+});
