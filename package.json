@@ -2,10 +2,10 @@
   "name": "gcjstools",
   "version": "0.1.0",
   "devDependencies": {
+    "faucet": "0.0.1",
     "gulp": "^3.9.0",
-    "gulp-batch": "^1.0.5",
-    "gulp-qunit": "^1.3.0",
-    "gulp-watch": "^4.3.5"
+    "gulp-tape": "0.0.7",
+    "tape": "^4.5.1"
   },
   "description": "Geocaching JavaScript Tools",
   "main": "gulpfile.js",

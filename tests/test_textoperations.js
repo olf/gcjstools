@@ -1,102 +1,127 @@
-test("TextOps - Text Cleanup", function() {
-    deepEqual(textToValues("A").text, "A");
+/* eslint-env node */
+/* eslint quotes: [2, "single", "avoid-escape"] */
+/* global textToValues */
 
-    deepEqual(textToValues("ä").text, "AE");
-    deepEqual(textToValues("Ä").text, "AE");
-    deepEqual(textToValues("ß").text, "SS");
-    deepEqual(textToValues("Üßä").text, "UESSAE");
+var fs = require('fs');
+var vm = require('vm');
+vm.runInThisContext(fs.readFileSync('./lib/text_operations.js'));
+
+var test = require('tape');
+
+test('TextOps - Text Cleanup', function(t) {
+    t.deepEqual('A', textToValues('A').text);
+
+    t.deepEqual('AE', textToValues('ä').text);
+    t.deepEqual('AE', textToValues('Ä').text);
+    t.deepEqual('SS', textToValues('ß').text);
+
+    t.deepEqual('UESSAE', textToValues('Üßä').text);
+
+    t.end();
 });
 
-test("TextOps - Basic Sums", function() {
-    deepEqual(textToValues("A").sum, 1);
-    deepEqual(textToValues("B").sum, 2);
-    deepEqual(textToValues("C").sum, 3);
-    deepEqual(textToValues("D").sum, 4);
-    deepEqual(textToValues("E").sum, 5);
-    deepEqual(textToValues("F").sum, 6);
-    deepEqual(textToValues("G").sum, 7);
-    deepEqual(textToValues("H").sum, 8);
-    deepEqual(textToValues("I").sum, 9);
-    deepEqual(textToValues("J").sum, 10);
-    deepEqual(textToValues("K").sum, 11);
-    deepEqual(textToValues("L").sum, 12);
-    deepEqual(textToValues("M").sum, 13);
-    deepEqual(textToValues("N").sum, 14);
-    deepEqual(textToValues("O").sum, 15);
-    deepEqual(textToValues("P").sum, 16);
-    deepEqual(textToValues("Q").sum, 17);
-    deepEqual(textToValues("R").sum, 18);
-    deepEqual(textToValues("S").sum, 19);
-    deepEqual(textToValues("T").sum, 20);
-    deepEqual(textToValues("U").sum, 21);
-    deepEqual(textToValues("V").sum, 22);
-    deepEqual(textToValues("W").sum, 23);
-    deepEqual(textToValues("X").sum, 24);
-    deepEqual(textToValues("Y").sum, 25);
-    deepEqual(textToValues("Z").sum, 26);
+test('TextOps - Basic Sums', function(t) {
+    t.deepEqual( 1, textToValues('A').sum);
+    t.deepEqual( 2, textToValues('B').sum);
+    t.deepEqual( 3, textToValues('C').sum);
+    t.deepEqual( 4, textToValues('D').sum);
+    t.deepEqual( 5, textToValues('E').sum);
+    t.deepEqual( 6, textToValues('F').sum);
+    t.deepEqual( 7, textToValues('G').sum);
+    t.deepEqual( 8, textToValues('H').sum);
+    t.deepEqual( 9, textToValues('I').sum);
+    t.deepEqual(10, textToValues('J').sum);
+    t.deepEqual(11, textToValues('K').sum);
+    t.deepEqual(12, textToValues('L').sum);
+    t.deepEqual(13, textToValues('M').sum);
+    t.deepEqual(14, textToValues('N').sum);
+    t.deepEqual(15, textToValues('O').sum);
+    t.deepEqual(16, textToValues('P').sum);
+    t.deepEqual(17, textToValues('Q').sum);
+    t.deepEqual(18, textToValues('R').sum);
+    t.deepEqual(19, textToValues('S').sum);
+    t.deepEqual(20, textToValues('T').sum);
+    t.deepEqual(21, textToValues('U').sum);
+    t.deepEqual(22, textToValues('V').sum);
+    t.deepEqual(23, textToValues('W').sum);
+    t.deepEqual(24, textToValues('X').sum);
+    t.deepEqual(25, textToValues('Y').sum);
+    t.deepEqual(26, textToValues('Z').sum);
 
-    deepEqual(textToValues("AZ").sum, 1+26);
-    deepEqual(textToValues("ZZ").sum, 26+26);
-    deepEqual(textToValues("AA").sum, 1+1);
+    t.deepEqual(1+26,  textToValues('AZ').sum);
+    t.deepEqual(26+26, textToValues('ZZ').sum);
+    t.deepEqual(1+1,   textToValues('AA').sum);
 
-    deepEqual(textToValues("ZZZZ").sum, 4*26); // 104
-    deepEqual(textToValues("ZZZZZZZ").sum, 7*26); // 182
+    t.deepEqual(4*26, textToValues('ZZZZ').sum); // 104
+    t.deepEqual(7*26, textToValues('ZZZZZZZ').sum); // 182
+
+    t.end();
 });
 
-test("TextOps - Hello World", function() {
-    deepEqual(textToValues("HELLO WORLD").sum, 124);
-    deepEqual(textToValues("HELLO WORLD").sum, textToValues("Hello World").sum);
-    deepEqual(textToValues("Hello World").sum, textToValues("!!!HeLlO WoRlD???").sum);
+test('TextOps - Hello World', function(t) {
+    t.deepEqual(124, textToValues('HELLO WORLD').sum);
+    t.deepEqual(textToValues('Hello World').sum, textToValues('HELLO WORLD').sum);
+    t.deepEqual(textToValues('!!!HeLlO WoRlD???').sum, textToValues('Hello World').sum);
 
-    deepEqual(textToValues("HELLO WORLD").cross_sum, textToValues("Hello World").cross_sum);
-    deepEqual(textToValues("HELLO WORLD").cross_sum, textToValues("Hello World").cross_sum);
-    deepEqual(textToValues("!!!HeLlO WoRlD???").cross_sum, textToValues("HELLO WORLD").cross_sum);
+    t.deepEqual(textToValues('Hello World').cross_sum, textToValues('HELLO WORLD').cross_sum);
+    t.deepEqual(textToValues('Hello World').cross_sum, textToValues('HELLO WORLD').cross_sum);
+    t.deepEqual(textToValues('HELLO WORLD').cross_sum, textToValues('!!!HeLlO WoRlD???').cross_sum);
 
-    deepEqual(textToValues("HELLO WORLD").cross_sum_iterated, textToValues("Hello World").cross_sum_iterated);
-    deepEqual(textToValues("Hello World").cross_sum_iterated, textToValues("!!!HeLlO WoRlD???").cross_sum_iterated);
-    deepEqual(textToValues("!!!HeLlO WoRlD???").cross_sum_iterated, textToValues("HELLO WORLD").cross_sum_iterated);
+    t.deepEqual(textToValues('Hello World').cross_sum_iterated, textToValues('HELLO WORLD').cross_sum_iterated);
+    t.deepEqual(textToValues('!!!HeLlO WoRlD???').cross_sum_iterated, textToValues('Hello World').cross_sum_iterated);
+    t.deepEqual(textToValues('HELLO WORLD').cross_sum_iterated, textToValues('!!!HeLlO WoRlD???').cross_sum_iterated);
+
+    t.end();
 });
 
-test("TextOps - Sanitized Sums", function() {
-   deepEqual(textToValues("Ä").sum, textToValues("A").sum + textToValues("E").sum);
-   deepEqual(textToValues("Ö").sum, textToValues("O").sum + textToValues("E").sum);
-   deepEqual(textToValues("Ü").sum, textToValues("U").sum + textToValues("E").sum);
-   deepEqual(textToValues("ß").sum, 2*textToValues("S").sum);
-   deepEqual(textToValues("ä").sum, textToValues("a").sum + textToValues("e").sum);
-   deepEqual(textToValues("ö").sum, textToValues("o").sum + textToValues("e").sum);
-   deepEqual(textToValues("ü").sum, textToValues("u").sum + textToValues("e").sum);
+test('TextOps - Sanitized Sums', function(t) {
+    t.deepEqual(textToValues('A').sum + textToValues('E').sum, textToValues('Ä').sum);
+    t.deepEqual(textToValues('O').sum + textToValues('E').sum, textToValues('Ö').sum);
+    t.deepEqual(textToValues('U').sum + textToValues('E').sum, textToValues('Ü').sum);
+    t.deepEqual(2*textToValues('S').sum, textToValues('ß').sum);
+    t.deepEqual(textToValues('a').sum + textToValues('e').sum, textToValues('ä').sum);
+    t.deepEqual(textToValues('o').sum + textToValues('e').sum, textToValues('ö').sum);
+    t.deepEqual(textToValues('u').sum + textToValues('e').sum, textToValues('ü').sum);
 
-   deepEqual(textToValues("A-+()").sum, 1);
-   deepEqual(textToValues("-+()").sum, 0);
-   deepEqual(textToValues("?*-+(){|}[]^\\").sum, 0);
+    t.deepEqual(1, textToValues('A-+()').sum);
+    t.deepEqual(0, textToValues('-+()').sum);
+    t.deepEqual(0, textToValues('?*-+(){|}[]^\\').sum);
+
+    t.end();
 });
 
-test("TextOps - Cross Sums", function() {
-    deepEqual(textToValues("A").cross_sum, 1);
-    deepEqual(textToValues("Z").cross_sum, 8);
+test('TextOps - Cross Sums', function(t) {
+    t.deepEqual(1, textToValues('A').cross_sum);
+    t.deepEqual(8, textToValues('Z').cross_sum);
 
-    deepEqual(textToValues("AZ").cross_sum, 2+7);
-    deepEqual(textToValues("ZZ").cross_sum, 5+2);
-    deepEqual(textToValues("AA").cross_sum, 2);
+    t.deepEqual(2+7, textToValues('AZ').cross_sum);
+    t.deepEqual(5+2, textToValues('ZZ').cross_sum);
+    t.deepEqual(2, textToValues('AA').cross_sum);
 
-    deepEqual(textToValues("ZZZZ").cross_sum, 1+0+4);
-    deepEqual(textToValues("ZZZZZZZ").cross_sum, 1+8+2);
+    t.deepEqual(1+0+4, textToValues('ZZZZ').cross_sum);
+    t.deepEqual(1+8+2, textToValues('ZZZZZZZ').cross_sum);
+
+    t.end();
 });
 
-test("TextOps - Iterated Cross Sums", function() {
-    deepEqual(textToValues("A").cross_sum_iterated, 1);
-    deepEqual(textToValues("Z").cross_sum_iterated, 8);
+test('TextOps - Iterated Cross Sums', function(t) {
+    t.deepEqual(1, textToValues('A').cross_sum_iterated);
+    t.deepEqual(8, textToValues('Z').cross_sum_iterated);
 
-    deepEqual(textToValues("AZ").cross_sum_iterated, 9);
-    deepEqual(textToValues("ZZ").cross_sum_iterated, 7);
-    deepEqual(textToValues("AA").cross_sum_iterated, 2);
+    t.deepEqual(9, textToValues('AZ').cross_sum_iterated);
+    t.deepEqual(7, textToValues('ZZ').cross_sum_iterated);
+    t.deepEqual(2, textToValues('AA').cross_sum_iterated);
 
-    deepEqual(textToValues("ZZZZZZZ").cross_sum_iterated, 2);
+    t.deepEqual(2, textToValues('ZZZZZZZ').cross_sum_iterated);
+
+    t.end();
 });
 
-test("TextOps - Values", function() {
-    deepEqual(textToValues("A").values, [1]);
-    deepEqual(textToValues("A A").values, [1,1]);
-    deepEqual(textToValues("Ä-A").values, [1,5,1]);
-    deepEqual(textToValues("ä+a").values, [1,5,1]);
+test('TextOps - Values', function(t) {
+    t.deepEqual([1], textToValues('A').values);
+    t.deepEqual([1,1], textToValues('A A').values);
+    t.deepEqual([1,5,1], textToValues('Ä-A').values);
+    t.deepEqual([1,5,1], textToValues('ä+a').values);
+
+    t.end();
 });
