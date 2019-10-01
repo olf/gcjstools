@@ -2,7 +2,7 @@
   "name": "gcjstools",
   "version": "0.1.0",
   "devDependencies": {
-    "eslint": "^2.4.0",
+    "eslint": "^4.18.2",
     "faucet": "0.0.1",
     "gulp": "^3.9.0",
     "gulp-eslint": "^2.0.0",
