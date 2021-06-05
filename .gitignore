@@ -1,1 +1,5 @@
 node_modules
+
+docker_node.sh
+
+package-lock.json
