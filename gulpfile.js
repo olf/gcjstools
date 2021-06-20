@@ -2,11 +2,13 @@
 
 var gulp = require('gulp');
 var eslint = require('gulp-eslint');
-var tape = require('gulp-tape');
+var jest = require('gulp-jest').default;
 
 gulp.task('unittest', function () {
-    return gulp.src('tests/**/*.js')
-        .pipe(tape());
+    return gulp.src('tests')
+        .pipe(jest({
+            'automock': false
+        }));
 });
 
 gulp.task('lint', function () {
