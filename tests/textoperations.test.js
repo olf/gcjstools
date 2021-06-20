@@ -1,6 +1,6 @@
 /* eslint-env node */
 /* eslint quotes: [2, "single", "avoid-escape"] */
-/* global to.textToValues */
+/* global expect, test */
 
 const to = require('../lib/text_operations.js');
 

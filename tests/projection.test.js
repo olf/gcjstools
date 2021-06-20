@@ -1,6 +1,6 @@
 /* eslint-env node */
 /* eslint quotes: [2, "single", "avoid-escape"] */
-/* global coords_any_to_dec coords_dec_to_deg projection */
+/* global expect, test */
 
 const cc = require('../lib/coordinate_conversions.js');
 const cp = require('../lib/coordinate_projection.js');

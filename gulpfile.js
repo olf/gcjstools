@@ -7,8 +7,8 @@ var jest = require('gulp-jest').default;
 gulp.task('unittest', function () {
     return gulp.src('tests')
         .pipe(jest({
-            "automock": false
-        }))
+            'automock': false
+        }));
 });
 
 gulp.task('lint', function () {

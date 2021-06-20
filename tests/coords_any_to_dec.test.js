@@ -1,6 +1,6 @@
 /* eslint-env node */
 /* eslint quotes: [2, "single", "avoid-escape"] */
-/* global coords_any_to_dec groundspeak_round */
+/* global expect, test */
 
 const cc = require('../lib/coordinate_conversions.js');
 

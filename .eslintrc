@@ -1,5 +1,6 @@
 env:
   browser: true
+  es6: true
 extends: 'eslint:recommended'
 rules:
   indent:
@@ -14,3 +15,5 @@ rules:
   semi:
     - 2
     - always
+parserOptions:
+  ecmaVersion: 2017

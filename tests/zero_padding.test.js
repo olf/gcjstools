@@ -1,6 +1,6 @@
 /* eslint-env node */
 /* eslint quotes: [2, "single", "avoid-escape"] */
-/* global zero_padding */
+/* global expect, test */
 
 const cc = require('../lib/coordinate_conversions.js');
 
