@@ -1,3 +1,3 @@
-# gcjstools [![Build Status](https://travis-ci.org/olf/gcjstools.svg?branch=master)](https://travis-ci.org/olf/gcjstools)
+# gcjstools [![Build Status](https://travis-ci.com/olf/gcjstools.svg?branch=master)](https://travis-ci.com/olf/gcjstools)
 
 Geocaching JavaScript Tools
